@@ -72,3 +72,13 @@ class EmployeeListView(LoginRequiredMixin, ListView):
 
     def get_queryset(self):
         return Employee.objects.select_related("user")
+
+
+class EmployeeProfile(LoginRequiredMixin, ListView):
+    model = Employee
+    template_name = "core/profile.html"
+    context_object_name = "profile"
+    login_url = reverse_lazy("login")
+
+    def get_queryset(self):
+        return Employee.objects.select_related("user")
