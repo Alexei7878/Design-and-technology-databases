@@ -1,4 +1,16 @@
 {% extends "core/view.html" %}
+
+{% block navbar %}
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container">
+        <span class="navbar-brand fw-semibold">АСУ ТП</span>
+        <div class="ms-auto">
+            <a class="btn btn-outline-light btn-sm" href="{% url 'log_out' %}"">Выйти</a>
+        </div>
+    </div>
+</nav>
+{% endblock %}
+
 {% block title %}Сотрудники{% endblock %}
 
 {% block content %}

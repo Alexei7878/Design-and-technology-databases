@@ -1,12 +1,25 @@
 {% extends "core/view.html" %}
-{% block title %}Сотрудники{% endblock %}
+
+{% block navbar %}
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container">
+        <span class="navbar-brand fw-semibold">АСУ ТП</span>
+        <div class="ms-auto">
+            <a class="btn btn-outline-light btn-sm" href="{% url 'employees' %}"">Назад</a>
+            <a class="btn btn-outline-light btn-sm" href="{% url 'log_out' %}"">Выйти</a>
+        </div>
+    </div>
+</nav>
+{% endblock %}
+
+{% block title %}Профиль{% endblock %}
 
 {% block content %}
 <div class="row">
     <div class="col">
-        <h3 class="mb-1">Список сотрудников</h3>
+        <h3 class="mb-1">{{ profile.user.last_name }} {{ profile.user.first_name }}</h3>
         <p class="text-muted mb-4">
-            Зарегистрированные пользователи автоматизированной системы
+            Зарегистрирован в системе АСУ ТП
         </p>
 
         <div class="card shadow-sm">
@@ -14,19 +27,17 @@
                 <table class="table table-striped mb-0 align-middle">
                     <thead class="table-light">
                         <tr>
-                            <th>ФИО</th>
-                            <th>Должность</th>
-                            <th>Подразделение</th>
+                            <!--<th class="text-center">ФИО</th>-->
+                            <th class="text-center">Должность</th>
+                            <th class="text-center">Подразделение</th>
                         </tr>
                     </thead>
                     <tbody>
-                        {% for emp in employees %}
                         <tr>
-                            <td>{{ emp.user.last_name }} {{ emp.user.first_name }}</td>
-                            <td>{{ emp.position }}</td>
-                            <td>{{ emp.department }}</td>
+                            <!--<td>{{ profile.user.last_name }} {{ profile.user.first_name }}</td>-->
+                            <td>{{ profile.position }}</td>
+                            <td>{{ profile.department }}</td>
                         </tr>
-                        {% endfor %}
                     </tbody>
                 </table>
             </div>

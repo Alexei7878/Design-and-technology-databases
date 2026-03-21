@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 from django.shortcuts import redirect, render
 from django.urls import reverse_lazy
 from django.views import View
-from django.views.generic import ListView, TemplateView
+from django.views.generic import ListView, TemplateView, DetailView
 
 from .models import Employee
 
@@ -74,11 +74,16 @@ class EmployeeListView(LoginRequiredMixin, ListView):
         return Employee.objects.select_related("user")
 
 
-class EmployeeProfile(LoginRequiredMixin, ListView):
+class EmployeeProfile(LoginRequiredMixin, DetailView):
     model = Employee
     template_name = "core/profile.html"
     context_object_name = "profile"
     login_url = reverse_lazy("login")
 
-    def get_queryset(self):
-        return Employee.objects.select_related("user")
+    def get_object(self, queryset=None):
+        return Employee.objects.select_related("user").get(user=self.request.user)
+
+
+class Log_out(View):
+    def get(self, request, *args, **kwargs):
+        return redirect('login')
