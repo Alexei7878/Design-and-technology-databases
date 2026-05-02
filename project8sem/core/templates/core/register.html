@@ -19,52 +19,86 @@
 
         <div class="card shadow-sm">
             <div class="card-body">
+
                 <form method="post">
                     {% csrf_token %}
 
                     <div class="row">
                         <div class="col-md-6 mb-3">
                             <label class="form-label">Имя</label>
-                            <input class="form-control" name="first_name">
+                            <input class="form-control" name="first_name" value="{{ form_data.first_name|default:'' }}">
+
+                            {% if errors.first_name %}
+                            <div class="text-danger">{{ errors.first_name }}</div>
+                            {% endif %}
                         </div>
+
                         <div class="col-md-6 mb-3">
                             <label class="form-label">Фамилия</label>
-                            <input class="form-control" name="last_name">
+                            <input class="form-control" name="last_name" value="{{ form_data.last_name|default:'' }}">
+
+                            {% if errors.last_name %}
+                                <div class="text-danger">{{ errors.last_name }}</div>
+                            {% endif %}
                         </div>
                     </div>
 
                     <div class="mb-3">
                         <label class="form-label">Логин</label>
-                        <input class="form-control" name="username">
+                        <input class="form-control" name="username" value="{{ form_data.username|default:'' }}">
+
+                        {% if errors.username %}
+                            <div class="text-danger">{{ errors.username }}</div>
+                        {% endif %}
                     </div>
 
                     <div class="mb-3">
                         <label class="form-label">Пароль</label>
-                        <input type="password" class="form-control" name="password">
+                        <input type="password" class="form-control" name="password" value="{{ form_data.password|default:'' }}">
+
+                        {% if errors.password %}
+                            <div class="text-danger">{{ errors.password }}</div>
+                        {% endif %}
                     </div>
 
                     <div class="mb-3">
                         <label class="form-label">Подтверждение пароля</label>
-                        <input type="password" class="form-control" name="password_chek">
+                        <input type="password" class="form-control" name="password_chek" value="{{ form_data.password_chek|default:'' }}">
+
+                        {% if errors.password_chek %}
+                            <div class="text-danger">{{ errors.password_chek }}</div>
+                        {% endif %}
                     </div>
 
                     <hr class="my-4">
 
                     <div class="mb-3">
                         <label class="form-label">Должность</label>
-                        <input class="form-control" name="position">
+                        <input class="form-control" name="position" value="{{ form_data.position|default:'' }}">
+
+                        {% if errors.position %}
+                            <div class="text-danger">{{ errors.position }}</div>
+                        {% endif %}
                     </div>
 
-                    <div class="mb-4">
-                        <label class="form-label">Подразделение</label>
-                        <input class="form-control" name="department">
-                    </div>
+                    {% if form_data.position == "Технолог" %}
+                        <div class="mb-4">
+                            <label class="form-label">Подразделение</label>
+                            <input class="form-control" name="department" value="{{ form_data.department|default:'' }}">
 
-                    {% if errors %}
-                        {% for field, error in errors.items %}
-                            <p style="color: red;">{{ error }}</p>
-                        {% endfor %}
+                            {% if errors.department %}
+                                <div class="text-danger">{{ errors.department }}</div>
+                            {% endif %}
+                        </div>
                     {% endif %}
+
+                    <!--{% if errors %}
+                        <div class="error-messages">
+                            {% for field, error in errors.items %}
+                                <p style="color: red;">{{ error }}</p>
+                            {% endfor %}
+                        </div>
+                    {% endif %}-->
 
                     <button class="btn btn-success w-100">
                         Зарегистрировать

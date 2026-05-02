@@ -59,23 +59,45 @@ class UserRegisterView(View):
         }
 
         errors = {}
+        form_data = {
+            'first_name': request.POST.get('first_name', ''),
+            'last_name': request.POST.get('last_name', ''),
+            'username': request.POST.get('username', ''),
+            'password': request.POST.get('password', ''),
+            'password_chek': request.POST.get('password_chek', ''),
+            'position': request.POST.get('position', ''),
+            'department': request.POST.get('department', ''),
+        }
 
         for field in required_fields:
-            if not request.POST.get(field):
+            value = request.POST.get(field)
+            form_data[field] = value
+            if not value:
                 errors[field] = f"Поле {field_names[field]} обязательно для заполнения!"
 
         password_chek = request.POST.get("password_chek")
         password = request.POST.get("password")
+        username = request.POST.get("username")
+        password = request.POST.get("password")
+
+        if username and User.objects.filter(username=username).exists():
+            errors['username'] = "Пользователь с таким логином уже существует!"
+
+        if password and len(password) < 8:
+            errors['password'] = "Пароль должен содержать минимум 8 символов!"
 
         if (password != password_chek):
             errors['password_chek'] = "Пароли не совпадают!"
 
         if errors:
-            return render(request, 'core/register.html', {'errors': errors})
+            return render(request, 'core/register.html', {
+                'errors': errors,
+                'form_data': form_data,
+                'position': form_data['position']})
 
         user = User.objects.create_user(
-            username=request.POST.get("username"),
-            password=request.POST.get("password"),
+            username=username,
+            password=password,
             first_name=request.POST.get("first_name"),
             last_name=request.POST.get("last_name"),
         )
