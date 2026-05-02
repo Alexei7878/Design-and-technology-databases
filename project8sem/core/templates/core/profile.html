@@ -6,7 +6,7 @@
         <span class="navbar-brand fw-semibold">АСУ ТП</span>
         <div class="ms-auto">
             <a class="btn btn-outline-light btn-sm" href="{% url 'employees' %}"">Назад</a>
-            <a class="btn btn-outline-light btn-sm" href="{% url 'log_out' %}"">Выйти</a>
+            <a class="btn btn-outline-light btn-sm" href="{% url 'logout' %}"">Выйти</a>
         </div>
     </div>
 </nav>
@@ -28,15 +28,15 @@
                     <thead class="table-light">
                         <tr>
                             <!--<th class="text-center">ФИО</th>-->
-                            <th class="text-center">Должность</th>
-                            <th class="text-center">Подразделение</th>
+                            <td class="text-center">Должность</td>
+                            <td class="text-center">Подразделение</td>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
                             <!--<td>{{ profile.user.last_name }} {{ profile.user.first_name }}</td>-->
-                            <td>{{ profile.position }}</td>
-                            <td>{{ profile.department }}</td>
+                            <td class="text-center">{{ profile.position }}</td>
+                            <td class="text-center">{{ profile.department }}</td>
                         </tr>
                     </tbody>
                 </table>

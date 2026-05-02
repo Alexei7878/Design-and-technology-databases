@@ -5,6 +5,7 @@ from django.shortcuts import redirect, render
 from django.urls import reverse_lazy
 from django.views import View
 from django.views.generic import ListView, TemplateView, DetailView
+# from django.shortcuts import redirect
 
 from .models import Employee
 
@@ -42,6 +43,36 @@ class UserRegisterView(View):
         return self.render_to_response()
 
     def post(self, request):
+        part1 = ['username', 'password', 'password_chek']
+        part2 = ['first_name', 'last_name', 'position', 'department']
+
+        required_fields = part1 + part2
+
+        field_names = {
+            'username': "Логин",
+            'password': "Пароль",
+            'password_chek': 'Подтверждение пароля',
+            'first_name': 'Имя',
+            'last_name': 'Фамилия',
+            'position': "Должность",
+            'department': "Подразделение"
+        }
+
+        errors = {}
+
+        for field in required_fields:
+            if not request.POST.get(field):
+                errors[field] = f"Поле {field_names[field]} обязательно для заполнения!"
+
+        password_chek = request.POST.get("password_chek")
+        password = request.POST.get("password")
+
+        if (password != password_chek):
+            errors['password_chek'] = "Пароли не совпадают!"
+
+        if errors:
+            return render(request, 'core/register.html', {'errors': errors})
+
         user = User.objects.create_user(
             username=request.POST.get("username"),
             password=request.POST.get("password"),
@@ -82,6 +113,10 @@ class EmployeeProfile(LoginRequiredMixin, DetailView):
 
     def get_object(self, queryset=None):
         return Employee.objects.select_related("user").get(user=self.request.user)
+
+
+"""class LogoutConfirmView(TemplateView):
+    template_name = 'logout_confirm.html'"""
 
 
 class Log_out(View):

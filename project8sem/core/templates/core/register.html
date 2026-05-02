@@ -1,4 +1,15 @@
 {% extends "core/base.html" %}
+{% block navbar %}
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <span class="navbar-brand fw-semibold">АСУ ТП</span>
+            <div class="ms-auto">
+                <a class="btn btn-outline-light btn-sm" href="{% url 'login' %}"">Войти</a>
+            </div>
+        </div>
+    </nav>
+{% endblock %}
+
 {% block title %}Регистрация{% endblock %}
 
 {% block content %}
@@ -32,6 +43,11 @@
                         <input type="password" class="form-control" name="password">
                     </div>
 
+                    <div class="mb-3">
+                        <label class="form-label">Подтверждение пароля</label>
+                        <input type="password" class="form-control" name="password_chek">
+                    </div>
+
                     <hr class="my-4">
 
                     <div class="mb-3">
@@ -43,6 +59,12 @@
                         <label class="form-label">Подразделение</label>
                         <input class="form-control" name="department">
                     </div>
+
+                    {% if errors %}
+                        {% for field, error in errors.items %}
+                            <p style="color: red;">{{ error }}</p>
+                        {% endfor %}
+                    {% endif %}
 
                     <button class="btn btn-success w-100">
                         Зарегистрировать

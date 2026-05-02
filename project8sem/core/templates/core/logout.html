@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Подтверждение выхода</title>
+</head>
+<body>
+    <h2>Вы уверены, что хотите выйти?</h2>
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-success">Да, выйти</button>
+        <a href="/" class="btn btn-secondary">Отмена</a>
+    </form>
+</body>
+</html>
